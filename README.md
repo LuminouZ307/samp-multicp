@@ -37,7 +37,7 @@ sampctl package install LuminouZ307/samp-multicp
 Include in your code and begin using the library:
 
 ```pawn
-#include <samp-multicp>
+#include <multicp>
 ```
 
 ## Usage
