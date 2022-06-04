@@ -28,7 +28,7 @@ Happy Pawning!
 
 ## Read This
 
-This script is actually inspired from [here](https://github.com/TShoKT/multiple-checkpoints-samp)
+This script is actually inspired from [here](https://github.com/TShoKT/multiple-checkpoints-samp),
 but i made my own version and using some library like YSI.
 
 ## Installation
