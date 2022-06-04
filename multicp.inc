@@ -61,56 +61,56 @@ stock SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = f
     return index;
 }
 
-stock DisablePlayerMultiCP(playerid, cpidx) {
+stock DisablePlayerMultiCP(playerid, cpid) {
 
     if(!IsPlayerConnected(playerid))
         return 0;
 
-    if(!Iter_Contains(MultiCP, cpidx))
+    if(!Iter_Contains(MultiCP, cpid))
         return 0;
 
-    if(IsValidDynamicArea(g_cpArea[playerid][cpidx]))
-        DestroyDynamicArea(g_cpArea[playerid][cpidx]);
+    if(IsValidDynamicArea(g_cpArea[playerid][cpid]))
+        DestroyDynamicArea(g_cpArea[playerid][cpid]);
 
-    g_cpAutoDisable[playerid][cpidx] = false;
+    g_cpAutoDisable[playerid][cpid] = false;
 
-    RemovePlayerMapIcon(playerid, cpidx);
-    Iter_Remove(MultiCP, cpidx);
+    RemovePlayerMapIcon(playerid, cpid);
+    Iter_Remove(MultiCP, cpid);
     return 1; 
 }
 
-stock bool:IsPlayerInMultiCP(playerid, cpidx) {
+stock bool:IsPlayerInMultiCP(playerid, cpid) {
 
     if(!IsPlayerConnected(playerid))
         return false;
 
-    if(!Iter_Contains(MultiCP, cpidx))
+    if(!Iter_Contains(MultiCP, cpid))
         return false;
 
-    return (IsPlayerInDynamicArea(playerid, g_cpArea[playerid][cpidx]));
+    return (IsPlayerInDynamicArea(playerid, g_cpArea[playerid][cpid]));
 }
 
 hook OnPlayerEnterDynArea(playerid, STREAMER_TAG_AREA:areaid) {
 
-    new cpidx = INVALID_MULTICP;
-    cpidx = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID);
+    new cpid = INVALID_MULTICP;
+    cpid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID);
 
-    if(Iter_Contains(MultiCP, cpidx))
+    if(Iter_Contains(MultiCP, cpid))
     {
-        if(g_cpAutoDisable[playerid][cpidx]) {
-            DisablePlayerMultiCP(playerid, cpidx); }
+        if(g_cpAutoDisable[playerid][cpid]) {
+            DisablePlayerMultiCP(playerid, cpid); }
 
-        CallLocalFunction(#OnPlayerEnterMultiCP, "dd", playerid, cpidx);
+        CallLocalFunction(#OnPlayerEnterMultiCP, "dd", playerid, cpid);
     }
 }
 
 hook OnPlayerLeaveDynArea(playerid, STREAMER_TAG_AREA:areaid) {
 
-    new cpidx = INVALID_MULTICP;
-    cpidx = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID);
+    new cpid = INVALID_MULTICP;
+    cpid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID);
 
-    if(Iter_Contains(MultiCP, cpidx))
+    if(Iter_Contains(MultiCP, cpid))
     {
-        CallLocalFunction(#OnPlayerLeaveMultiCP, "dd", playerid, cpidx);
+        CallLocalFunction(#OnPlayerLeaveMultiCP, "dd", playerid, cpid);
     }
 }
