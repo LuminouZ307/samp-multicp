@@ -1,8 +1,8 @@
-#if defined _multicp_included
+#if defined _MULTICP_included
 	#endinput
 #endif
 
-#define _multicp_included
+#define _MULTICP_included
 
 #if !defined _samp_included
     #error could not find a_samp.inc, please check your server includes.
@@ -42,13 +42,13 @@ forward OnPlayerLeaveMultiCP(playerid, cpid);
 static
     STREAMER_TAG_AREA:g_cpArea[MAX_PLAYERS][MAX_MULTICP],
     bool:g_cpAutoDisable[MAX_PLAYERS][MAX_MULTICP],
-    Iterator:MultiCP<MAX_MULTICP>;
+    Iterator:MultiCP<MAX_PLAYERS, MAX_MULTICP>;
 
 
 stock SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = false) {
 
     new index = INVALID_ITERATOR_SLOT;
-    if((index = Iter_Alloc(MultiCP)) != INVALID_ITERATOR_SLOT) {
+    if((index = Iter_Alloc(MultiCP<playerid>)) != INVALID_ITERATOR_SLOT) {
         SetPlayerMapIcon(playerid, index, x, y, z, 0, MULTICP_DEFAULT_COL, MAPICON_GLOBAL_CHECKPOINT);
         g_cpArea[playerid][index] = CreateDynamicCylinder(x, y, z - 0.5, z + 0.5, 1.3, _, _, playerid);
         g_cpAutoDisable[playerid][index] = autodisable;
@@ -66,7 +66,7 @@ stock DisablePlayerMultiCP(playerid, cpid) {
     if(!IsPlayerConnected(playerid))
         return 0;
 
-    if(!Iter_Contains(MultiCP, cpid))
+    if(!Iter_Contains(MultiCP<playerid>, cpid))
         return 0;
 
     if(IsValidDynamicArea(g_cpArea[playerid][cpid]))
@@ -75,16 +75,26 @@ stock DisablePlayerMultiCP(playerid, cpid) {
     g_cpAutoDisable[playerid][cpid] = false;
 
     RemovePlayerMapIcon(playerid, cpid);
-    Iter_Remove(MultiCP, cpid);
+    Iter_Remove(MultiCP<playerid>, cpid);
     return 1; 
 }
 
+stock DisablePlayerAllMultiCP(playerid)
+{
+    foreach(new cpid : MultiCP<playerid>)
+    {
+        DisablePlayerMultiCP(playerid, cpid);
+    }
+    Iter_Clear(MultiCP<playerid>);
+    return 1;
+
+}
 stock bool:IsPlayerInMultiCP(playerid, cpid) {
 
     if(!IsPlayerConnected(playerid))
         return false;
 
-    if(!Iter_Contains(MultiCP, cpid))
+    if(!Iter_Contains(MultiCP<playerid>, cpid))
         return false;
 
     return (IsPlayerInDynamicArea(playerid, g_cpArea[playerid][cpid]));
@@ -95,7 +105,7 @@ hook OnPlayerEnterDynArea(playerid, STREAMER_TAG_AREA:areaid) {
     new cpid = INVALID_MULTICP;
     cpid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID);
 
-    if(Iter_Contains(MultiCP, cpid))
+    if(Iter_Contains(MultiCP<playerid>, cpid))
     {
         if(g_cpAutoDisable[playerid][cpid]) {
             DisablePlayerMultiCP(playerid, cpid); }
@@ -109,7 +119,7 @@ hook OnPlayerLeaveDynArea(playerid, STREAMER_TAG_AREA:areaid) {
     new cpid = INVALID_MULTICP;
     cpid = Streamer_GetIntData(STREAMER_TYPE_AREA, areaid, E_STREAMER_EXTRA_ID);
 
-    if(Iter_Contains(MultiCP, cpid))
+    if(Iter_Contains(MultiCP<playerid>, cpid))
     {
         CallLocalFunction(#OnPlayerLeaveMultiCP, "dd", playerid, cpid);
     }
