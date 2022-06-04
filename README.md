@@ -42,12 +42,38 @@ Include in your code and begin using the library:
 
 ## Usage
 
-<!--
-Write your code documentation or examples here. If your library is documented in
-the source code, direct users there. If not, list your API and describe it well
-in this section. If your library is passive and has no API, simply omit this
-section.
--->
+## Usage
+
+### Functions
+
+* `SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = false)` :
+
+  * Sets player checkpoint.
+  
+  * playerid = The player ID you wan't sets the checkpoint.
+  * x = x position.
+  * y = y position.
+  * z = z position.
+  * autodisable = if autodisable is true, when you entering the checkpoint it will automatically disabled.
+
+* `DisablePlayerMultiCP(playerid, cpid)` :
+
+  * Remove player checkpoint.
+
+* `IsPlayerInMultiCP(playerid, cpid)` :
+
+  * Check if player in a checkpoint.
+
+### Callbacks
+
+* `OnPlayerLeaveMultiCP(playerid, cpid)` :
+
+  * Detect when player leaving checkpoint.
+
+* `OnPlayerEnterMultiCP(playerid, cpid)` :
+
+  * Detect when player entering checkpoint.
+
 
 ## Testing
 
