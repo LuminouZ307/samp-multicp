@@ -1,0 +1,20 @@
+{
+	"user": "LuminouZ307",
+	"repo": "samp-multicp",
+	"entry": "test.pwn",
+	"output": "gamemodes/test.amx",
+	"dependencies": [
+		"pawn-lang/samp-stdlib",
+		"pawn-lang/YSI-Includes:v5.06.1932",
+		"samp-incognito/samp-streamer-plugin:v2.9.5"
+	],
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "server",
+		"rcon_password": "password",
+		"port": 7777,
+		"hostname": "SA-MP Server",
+		"maxplayers": 50,
+		"language": ""
+	}
+}
