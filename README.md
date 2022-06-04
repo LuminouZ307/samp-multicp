@@ -26,6 +26,11 @@ And finally, maintaining your version number`:
 Happy Pawning!
 -->
 
+## Read This
+
+This script is actually inspired from [here] (https://github.com/TShoKT/multiple-checkpoints-samp)
+but i made my own version and using some library like YSI.
+
 ## Installation
 
 Simply install to your project:
@@ -39,8 +44,6 @@ Include in your code and begin using the library:
 ```pawn
 #include <multicp>
 ```
-
-## Usage
 
 ## Usage
 
