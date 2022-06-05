@@ -63,9 +63,6 @@ stock SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = f
 
 stock DisablePlayerMultiCP(playerid, cpid) {
 
-    if(!IsPlayerConnected(playerid))
-        return 0;
-
     if(!Iter_Contains(MultiCP<playerid>, cpid))
         return 0;
 
@@ -81,9 +78,16 @@ stock DisablePlayerMultiCP(playerid, cpid) {
 
 stock DisablePlayerAllMultiCP(playerid)
 {
-    foreach(new cpid : MultiCP<playerid>)
+    foreach(new cpid : MultiCP<playerid>) if(IsValidDynamicArea(g_cpArea[playerid][cpid]))
     {
-        DisablePlayerMultiCP(playerid, cpid);
+        if(IsValidDynamicArea(g_cpArea[playerid][cpid]))
+            DestroyDynamicArea(g_cpArea[playerid][cpid]);
+
+        g_cpAutoDisable[playerid][cpid] = false;
+        RemovePlayerMapIcon(playerid, cpid);
+        
+        new next = cpid;
+        Iter_SafeRemove(MultiCP<playerid>, next, cpid);
     }
     Iter_Clear(MultiCP<playerid>);
     return 1;
