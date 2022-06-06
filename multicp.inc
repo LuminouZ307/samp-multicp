@@ -45,11 +45,11 @@ static
     Iterator:MultiCP<MAX_PLAYERS, MAX_MULTICP>;
 
 
-stock SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = false) {
+stock SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = false, color = MULTICP_DEFAULT_COL) {
 
     new index = INVALID_ITERATOR_SLOT;
     if((index = Iter_Alloc(MultiCP<playerid>)) != INVALID_ITERATOR_SLOT) {
-        SetPlayerMapIcon(playerid, index, x, y, z, 0, MULTICP_DEFAULT_COL, MAPICON_GLOBAL_CHECKPOINT);
+        SetPlayerMapIcon(playerid, index, x, y, z, 0, color, MAPICON_GLOBAL_CHECKPOINT);
         g_cpArea[playerid][index] = CreateDynamicCylinder(x, y, z - 0.5, z + 0.5, 1.3, _, _, playerid);
         g_cpAutoDisable[playerid][index] = autodisable;
 

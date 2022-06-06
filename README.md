@@ -49,7 +49,7 @@ Include in your code and begin using the library:
 
 ### Functions
 
-* `SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = false)` :
+* `SetPlayerMultiCP(playerid, Float:x, Float:y, Float:z, bool:autodisable = false, color = MULTICP_DEFAULT_COL)` :
 
   * Sets player checkpoint.
   
@@ -58,6 +58,7 @@ Include in your code and begin using the library:
   * y = y position.
   * z = z position.
   * autodisable = if autodisable is true, when you entering the checkpoint it will automatically disabled.
+  * color = checkpoint colour (default is red).
 
 * `DisablePlayerMultiCP(playerid, cpid)` :
 
@@ -66,6 +67,10 @@ Include in your code and begin using the library:
 * `IsPlayerInMultiCP(playerid, cpid)` :
 
   * Check if player in a checkpoint.
+
+* `DisablePlayerAllMultiCP(playerid)` :
+
+  * Remove player all checkpoints.
 
 ### Callbacks
 
